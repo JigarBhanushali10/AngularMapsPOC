@@ -1,0 +1,38 @@
+<div class="p-3 h-100">
+    <div class="d-flex my-4 ">
+        <input type="text" id='searchPlacesInputById' class="form-control w-50" #searchPlacesInput>
+        <button class="btn btn-secondary mx-4" (click)="searchPlace()">Search</button>
+
+    </div>
+    <div class="position-relative" style="height: 600px; width: 100%;">
+
+        <google-map height="100%" width="100%" [center]="center" [zoom]="zoom" (mapClick)="addMarker($event)"
+            [options]="mapOptions" #map>
+
+            <map-marker-clusterer [imagePath]="markerClustererImagePath" #cluster>
+
+
+                <map-marker *ngFor="let markerPosition of markerPositions" [position]="markerPosition.location"
+                    [options]="markerOptions" #markerElement="mapMarker" (mapClick)="openInfo(markerElement)">
+                </map-marker>
+            </map-marker-clusterer>
+            <map-info-window>{{infoContent}}</map-info-window>
+
+            <map-circle [options]="circleOptions"></map-circle>
+
+        </google-map>
+        <div class="bg-white position-absolute bottom-0 end-0 w-25 h-25 p-3 m-3 text-break d-flex flex-column shadow-lg rounded-3"
+            #infoWindowDiv *ngIf="toggleInfoWindo">
+
+            <!-- button to close custom info div -->
+            <span class="align-self-end cursor-pointer" (click)="closeInfoWindow()">X</span>
+            <div class="flex-grow-1 w-100">
+
+
+            </div>
+
+        </div>
+        <br>
+
+
+    </div>
